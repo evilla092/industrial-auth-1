@@ -14,4 +14,22 @@ class CommentPolicy < ApplicationPolicy
   def destroy?
     user == comment.author || user == comment.owner
   end
+
+  # def show?
+  #   user == comment.author || user == comment.owner || !comment.owner.private? || comment.owner.followers.include?(user)
+  # end
+
+  def create?
+    true
+  end
+
+  def new?
+    true
+  end
+
+  def update?
+    user == comment.author
+  end
+
+
 end

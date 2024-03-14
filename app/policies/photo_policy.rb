@@ -1,5 +1,4 @@
 class PhotoPolicy < ApplicationPolicy
-
   attr_reader :user, :photo
 
   def initialize(user, photo)
@@ -12,4 +11,36 @@ class PhotoPolicy < ApplicationPolicy
     !photo.owner.private? ||
     photo.owner.followers.include?(user)
   end
+
+  def create?
+    true
+  end
+
+  def edit?
+    user == photo.owner
+  end
+
+  def destroy?
+    user == photo.owner
+  end
+
+  def update?
+    user == photo.owner
+  end
+
+  def new?
+    true
+  end
+
+  def index?
+    true
+  end
+
+  class Scope < Scope
+    def resolve
+      scope.where(owner: user)
+    end
+  end
+
+
 end
